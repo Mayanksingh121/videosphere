@@ -1,11 +1,19 @@
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosSearch } from "react-icons/io";
+import { useDispatch } from "react-redux";
+import { toggleMenu } from "../utils/appSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
+
+  const handleToggle = (): void => {
+    dispatch(toggleMenu());
+  };
+
   return (
     <div className="flex justify-between p-5 mb-2 shadow-lg">
       <div className="flex items-center text-xl col-span-1">
-        <button>
+        <button onClick={handleToggle}>
           <GiHamburgerMenu />
         </button>
         <h1 className="font-display mx-4 font-bold">
