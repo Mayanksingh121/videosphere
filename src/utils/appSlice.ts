@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export interface AppState {
   isMenuOpen: boolean;
+  searchSuggestions: string[];
 }
 
 const initialState: AppState = {
   isMenuOpen: true,
+  searchSuggestions: [],
 };
 
 const appSlice = createSlice({
@@ -15,8 +17,14 @@ const appSlice = createSlice({
     toggleMenu: (state) => {
       state.isMenuOpen = !state.isMenuOpen;
     },
+    closeMenu: (state) => {
+      state.isMenuOpen = false;
+    },
+    setSearchSuggestion: (state, action) => {
+      state.searchSuggestions = action.payload;
+    },
   },
 });
 
-export const { toggleMenu } = appSlice.actions;
+export const { toggleMenu, closeMenu, setSearchSuggestion } = appSlice.actions;
 export default appSlice.reducer;
