@@ -5,6 +5,7 @@ import { setSearchSuggestion, toggleMenu } from "../utils/appSlice";
 import { useEffect, useState } from "react";
 import { YOUTUBE_SEARCH_API } from "../utils/constants";
 import { RootState } from "../utils/appstore";
+import { cacheResults } from "../utils/searchSlice";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -12,13 +13,18 @@ const Header = () => {
   const searchResults: string[] = useSelector(
     (store: RootState) => store.app.searchSuggestions
   );
+  const searchCache: any = useSelector((store: RootState) => store.search);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const timer: number = setTimeout(
-      (): Promise<void> => getSearchSuggestions(),
-      200
-    );
+    const timer: number = setTimeout(() => {
+      if (searchCache[searchQuery]) {
+        dispatch(setSearchSuggestion(searchCache[searchQuery]));
+      } else {
+        getSearchSuggestions();
+      }
+    }, 200);
 
     return (): void => {
       clearTimeout(timer);
@@ -28,7 +34,13 @@ const Header = () => {
   const getSearchSuggestions = async (): Promise<void> => {
     const data: Response = await fetch(YOUTUBE_SEARCH_API + searchQuery);
     const json: any[] = await data.json();
+    console.log(searchQuery);
     dispatch(setSearchSuggestion(json[1]));
+    dispatch(
+      cacheResults({
+        [searchQuery]: json[1],
+      })
+    );
   };
 
   const handleToggle = (): void => {
@@ -69,9 +81,10 @@ const Header = () => {
                     {result}
                   </li>
                 );
-              })} 
+              })}
             </ul>
-          </div>)}
+          </div>
+        )}
       </div>
       <div className="">
         <img className="h-8" alt="user" src="" />

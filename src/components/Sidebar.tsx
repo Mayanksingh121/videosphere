@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <motion.div className="h-96 overflow-y-scroll font-display p-5 shadow-lg w-52">
+    <motion.div className="h-full overflow-y-scroll font-display p-5 shadow-lg w-52">
       <ul>
         <Link to="/">
           <li className="flex items-center gap-4 py-2">

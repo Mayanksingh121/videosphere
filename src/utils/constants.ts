@@ -16,7 +16,7 @@ export const BUTTON_DATA: string[] = [
 const API_KEY: string = "AIzaSyD41fKzbQnx1tqiyxdYjQfSvpLI4QIeUgs";
 
 export const YOUTUBE_API: string =
-  `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=IN&key=` +
+  `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=US&key=` +
   API_KEY;
 
 export const YOUTUBE_SEARCH_API: string =
